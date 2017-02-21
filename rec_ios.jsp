@@ -261,6 +261,11 @@
                                 scaleX = appWidth / imgWidth;
                                 scaleY = appHeight / imgHeight;
                             }
+
+                            var appSource = appInfo.source;
+                            appTree = appSource.tree || appSource.hierarchy.node;
+                            scanAllNode();
+
                             break;
                         case 'getSource':
 
@@ -279,12 +284,16 @@
                     console.log('Client notified socket has closed', event);
                 };
 
+                request_get();
+
                 // 关闭Socket....
                 //socket.close()
             };
 
-            setInterval("request_get()", 500);//1000为1秒钟
-            setInterval("request_getSource()", 3000);//1000为1秒钟
+//            request_get();
+//
+//            setInterval("request_get()", 500);//1000为1秒钟
+//            setInterval("request_getSource()", 3000);//1000为1秒钟
 
 
             $('#screenshot').click(function (event) {
@@ -324,8 +333,9 @@
                     }
 
 //                    alert(str);
-                    editor.getModel().setValue(editor.getModel().getValue()+str);
+//                    editor.getModel().setValue(editor.getModel().getValue()+str);
 
+                    request_get();
                 }
                 event.stopPropagation();
                 event.preventDefault();
@@ -361,7 +371,9 @@
                         "});\n";
 
 //                    alert(str);
-                    editor.getModel().setValue(editor.getModel().getValue()+str);
+//                    editor.getModel().setValue(editor.getModel().getValue()+str);
+
+                    request_get();
                 }
                 event.stopPropagation();
                 event.preventDefault();
@@ -371,7 +383,8 @@
         });
 
         function clickFunc(func) {
-            saveCommand(func, '');
+//            saveCommand(func, '');
+            request_get();
         }
     </script>
 </head>
@@ -395,7 +408,7 @@
                 <button type="button" onclick="clickFunc('menu')" class="btn btn-sm btn-info">menu</button>
                 <button type="button" onclick="clickFunc('home')" class="btn btn-sm btn-info">home</button>
                 <button type="button" onclick="clickFunc('back')" class="btn btn-sm btn-info">back</button>
-                <button type="button" onclick="clickFunc('record')" class="btn btn-sm btn-info">录制</button>
+                <button type="button" onclick="clickFunc('record')" class="btn btn-sm btn-info">刷新</button>
             </p>
 
         </tr>
@@ -407,22 +420,22 @@
                 <img id="screenshot" style="width:400px;height:600px;border:1px;float:left;" data-holder-rendered="true">
 
             </td>
-            <td style="padding-left: 10px;">
-                <div id="container" style="width:750px;height:600px;border:1px solid grey;float:right"></div>
+            <%--<td style="padding-left: 10px;">--%>
+                <%--<div id="container" style="width:750px;height:600px;border:1px solid grey;float:right"></div>--%>
 
 
-                <script type="text/javascript"  src="monaco-editor/min/vs/loader.js"></script>
-                <script>
-                    require.config({ paths: { 'vs': 'monaco-editor/min/vs' }});
-                    require(['vs/editor/editor.main'], function() {
-                        editor = monaco.editor.create(document.getElementById('container'), {
-                            value: '',
-                            language: 'javascript'
-                        });
-                    });
-                </script>
+                <%--<script type="text/javascript"  src="monaco-editor/min/vs/loader.js"></script>--%>
+                <%--<script>--%>
+                    <%--require.config({ paths: { 'vs': 'monaco-editor/min/vs' }});--%>
+                    <%--require(['vs/editor/editor.main'], function() {--%>
+                        <%--editor = monaco.editor.create(document.getElementById('container'), {--%>
+                            <%--value: '',--%>
+                            <%--language: 'javascript'--%>
+                        <%--});--%>
+                    <%--});--%>
+                <%--</script>--%>
 
-            </td>
+            <%--</td>--%>
         </tr>
     </table>
 
